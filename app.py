@@ -59,8 +59,20 @@ class Movie(db.Model):  # table name will be movie
     title = db.Column(db.String(60))  # 电影标题
     year = db.Column(db.String(4))  # 电影年份
 
+
+@app.context_processor      # register a context processor function
+def inject_user():
+    user = User.query.first()
+    return dict(user=user)        # return a dictionary, equal to {'user': user}
+
+
+@app.errorhandler(404)          # register an error handler
+def page_not_found(e):
+    return render_template('404.html'), 404
+
+
 @app.route('/')
 def index(): #define a view function 索引（首页）
-    user = User.query.first() # get the first user
+    # user = User.query.first() # get the first user
     movies = Movie.query.all() # get all movies
-    return render_template('index.html', user=user, movies=movies) #pass the value of user and movies to the template
+    return render_template('index.html', movies=movies) #pass the value of user and movies to the template
