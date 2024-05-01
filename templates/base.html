@@ -3,13 +3,16 @@
 <head>
     {% block head %}
     <meta charset="utf-8">         
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">      # 让页面根据设备的宽度来自动缩放页面，添加了 viewport meta 标签
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">      
     <title>{{ user.name }}'s Watchlist</title>
     <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css">
     {% endblock %}
 </head>
 <body>
+    {% for message in get_flashed_messages() %}       # 循环
+        <div class="alert">{{ message }}</div>
+    {% endfor %}
 
     <h2>
         <img alt="Avatar" class="avatar" src="{{ url_for('static', filename='images/avatar.png') }}">
@@ -17,7 +20,7 @@
     </h2>
     <nav>
         <ul>
-            <li><a href="{{ url_for('index') }}">Home</a></li>        # 添加导航栏
+            <li><a href="{{ url_for('index') }}">Home</a></li>       
         </ul>
     </nav>
     {% block content %}{% endblock %}
